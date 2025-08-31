@@ -2,16 +2,16 @@
 
 A blockchain cryptocurrency implementation project.
 
-### Prerequisites
+## Prerequisites
 
 - Node.js (v16.15.1 or higher recommended)
 - npm (v8.11.0 or higher recommended)
 
 ## Steps
 
-`npm init -y`
-`npm i jest@23.6.0 --save-dev`
-`npm install --save-dev nodemon`
+- `npm init -y`
+- `npm i jest@23.6.0 --save-dev`
+- `npm install --save-dev nodemon`
 
 ## Notes
 
