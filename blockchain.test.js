@@ -1,6 +1,14 @@
 const Blockchain = require("./blockchain");
 const Block = require("./block");
 
+// Helper function to create a chain with multiple blocks
+const addBlocks = (chain) => {
+  chain.addBlock({ data: "Bears" });
+  chain.addBlock({ data: "Beets" });
+  chain.addBlock({ data: "Battlestar Galactica" });
+  return chain;
+};
+
 describe("Blockchain", () => {
   let blockchain, newChain, originalChain;
 
@@ -28,9 +36,7 @@ describe("Blockchain", () => {
   describe("isValidChain()", () => {
     beforeEach(() => {
       blockchain = new Blockchain();
-      blockchain.addBlock({ data: "Bears" });
-      blockchain.addBlock({ data: "Beets" });
-      blockchain.addBlock({ data: "Battlestar Galactica" });
+      addBlocks(blockchain);
     });
 
     const corruptChain = () => {
@@ -48,20 +54,20 @@ describe("Blockchain", () => {
       return cases;
     };
 
-    it("returns true for valid chain", () => {
-      expect(Blockchain.isValidChain(blockchain.chain)).toBe(true);
-    });
-
     Object.entries(corruptChain()).forEach(([description, corruptFn]) => {
       it(`returns false when ${description}`, () => {
         corruptFn();
         expect(Blockchain.isValidChain(blockchain.chain)).toBe(false);
       });
     });
+
+    it("returns true for valid chain", () => {
+      expect(Blockchain.isValidChain(blockchain.chain)).toBe(true);
+    });
   });
 
   describe("replaceChain()", () => {
-    describe("when the new chain is not longer", () => {
+    describe("when the new chain is NOT longer", () => {
       it("does not replace the chain", () => {
         newChain.chain[0] = { new: "chain" };
 
@@ -73,12 +79,10 @@ describe("Blockchain", () => {
 
     describe("when the new chain is longer", () => {
       beforeEach(() => {
-        newChain.addBlock({ data: "Bears" });
-        newChain.addBlock({ data: "Beets" });
-        newChain.addBlock({ data: "Battlestar Galactica" });
+        addBlocks(newChain);
       });
 
-      describe("and the chain is invalid", () => {
+      describe("chain is invalid", () => {
         it("does not replace the chain", () => {
           newChain.chain[2].hash = "some-fake-hash";
 
@@ -88,7 +92,7 @@ describe("Blockchain", () => {
         });
       });
 
-      describe("and the chain is valid", () => {
+      describe("chain is valid", () => {
         it("replaces the chain", () => {
           blockchain.replaceChain(newChain.chain);
 

@@ -1,6 +1,6 @@
 # Cryptochain
 
-A blockchain cryptocurrency implementation project.
+A blockchain cryptocurrency implementation project (https://gale.udemy.com/course/build-blockchain-full-stack/).
 
 ## Prerequisites
 
