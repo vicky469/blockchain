@@ -21,12 +21,12 @@ class Blockchain {
     }
 
     for (let i = 1; i < chain.length; i++) {
-      const block = chain[i];
+      const { timestamp, lastHash, hash, data, nonce, difficulty } = chain[i];
       const lastBlock = chain[i - 1];
 
       if (
-        block.lastHash !== lastBlock.hash ||
-        block.hash !== cryptoHash(block.timestamp, block.lastHash, block.data)
+        lastHash !== lastBlock.hash ||
+        hash !== cryptoHash(timestamp, lastHash, data, nonce, difficulty)
       ) {
         return false;
       }
